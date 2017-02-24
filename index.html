@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Assignment 3 for INFO 474 at the University of Washington.">
+  <meta name="author" content="Jessica Kuelz">
+  <title>Assignment 3</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="bundle.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="//d3js.org/topojson.v1.min.js"></script>
+  <!--<script src="plotly-latest.min.js"></script>-->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  
+
+ </head>
+
+ <body>
+
+  <div class="jumbotron">
+      <div class="container">
+          <h1>Interactive Data Visualization</h1>
+          <p>INFO 474 | Assignment 3 | By Jessica Kuelz</p>
+          <p>Interactive D3 visualization of fatal commercial passenger plane crashes from 1993-2013.</p>
+      </div>
+  </div>
+
+    <div class="container " id="visualizations">
+        <div class="container">
+            <div class="col-md-10" id="chart"></div>
+            <div class="col-md-2" id="controls">
+                <form>
+                    <input type="radio" name="view" value="phase" checked>Flight Phase<br>
+                    <input type="radio" name="view" value="cause">Cause<br>
+                </form>
+            </div>
+        
+        <div id="map"></div>
+        </div>
+         <!--<svg class="chart"></svg>-->
+        
+         <!--<script src="script.js"></script>-->
+         <!--<script>
+            var width = 750;
+            var height = 450;
+            var margin = {top: 20, right: 15, bottom: 30, left: 40};
+                var w = width - margin.left - margin.right;
+                var h = height - margin.top - margin.bottom;
+
+            var dataset; //the full dataset
+            var patt = new RegExp("all");
+
+
+            d3.csv("data/Flight_Risk_Data.csv", function(error, flights) {
+            //read in the data
+            if (error) return console.warn(error);
+                flights.forEach(function(d) {
+                    d.date = +d.date;
+                    d.plane_type = +d.plane_type;
+                    d.country = +d.country;
+                    d.fat = +d.fat;
+                    d.phase = +d.phase;
+                    d.cause = +d.cause;
+            });
+            //dataset is the full dataset -- maintain a copy of this at all times
+            dataset = flights;
+
+
+            //all the data is now loaded, so draw the initial vis
+            drawVis(dataset);
+            });
+
+            var col = d3.scale.ordinal(d3.schemeCategory10);
+
+
+            var svg = d3.select("body").append("svg")
+                .attr("width", w + margin.left + margin.right)
+                .attr("height", h + margin.top + margin.bottom)
+            .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            var chart = d3.select(".chart")
+                .attr("width", w + margin.left + margin.right)
+                .attr("height", h + margin.top + margin.bottom+15)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            var tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
+            var x = d3.scale.linear()
+                    .domain([0, 1000])
+                    .range([0, w]);
+
+            var y = d3.scale.linear()
+                    .domain([0, 1000])
+                    .range([h, 0]);
+
+            // var xAxis = d3.axis.bottom()
+            //     .ticks(4)
+            //     .scale(x);
+
+            chart.append("g")
+                .attr("class", "axis")
+                .attr("transform", "translate(0," + h + ")")
+                .call(xAxis)
+                .append("text")
+                .attr("x", w)
+                .attr("y", -6)
+                .style("text-anchor", "end")
+                .text("Price");
+
+            var yAxis = d3.axis.left()
+                .scale(y);
+
+            chart.append("g")
+            .attr("class", "axis")
+            .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("True Value");
+
+            function drawVis(dataset) { //draw the circiles initially and on each interaction with a control
+
+            var circle = chart.selectAll("circle")
+            .data(dataset);
+
+            circle
+                .attr("cx", function(d) { return x(d.price);  })
+                .attr("cy", function(d) { return y(d.tValue);  })
+                .style("fill", function(d) { return col(d.plane_type); });
+
+            circle.exit().remove();
+
+            circle.enter().append("circle")
+                .attr("cx", function(d) { return x(d.price);  })
+                .attr("cy", function(d) { return y(d.tValue);  })
+                .attr("r", 4)
+                .style("stroke", "black");
+
+            };
+
+         </script>-->
+    </div>
+
+  <script>
+    // document.getElementById("type").onChange =
+    //     function() { filterType(this.value); }
+
+
+
+//   map stuff
+    // var width = 960,
+    //     height = 500;
+
+    // var color = d3.scale.ordinal()
+    //     .domain([0, 10, 25, 50, 90])
+    //     .range(["#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#3182bd", "#08519c"]);
+    //     // .range(['#1b9e77','#d95f02','#7570b3','#e7298a','#66a61e']);
+
+    // var path = d3.geo.path();
+
+    // var svg = d3.select("body").append("svg")
+    //     .attr("width", width)
+    //     .attr("height", height);
+
+    // queue()
+    // .defer(d3.json, "us.json")
+    // .defer(d3.csv, "/data/Flight_Risk_Data.csv")
+    // .await(ready);
+
+    // function ready(error, us, flights) {
+    // if (error) throw error;
+
+    // var valueById = {};
+
+    // flights.forEach(function(d) { valueById[d.id] = d.People_of_all_ages_in_poverty_percent_2007; console.log(valueById[d.id] = d.People_of_all_ages_in_poverty_percent_2007); });
+
+    // svg.append("g")
+    //     .attr("class", "countries")
+    //     .selectAll("path")
+    //     .data(topojson.feature(us, us.objects.countries).features)
+    //     .enter().append("path")
+    //     .attr("d", path)
+    //     .style("fill", function(d) { return color(valueById[d.id]); });
+
+    // svg.append("path")
+    //     .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a.id !== b.id; }))
+    //     .attr("class", "states")
+    //     .attr("d", path);
+    // }
+
+   </script>
+
+  <!--JQuery Library-->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+  <!--Bootstrap Library-->
+  <script <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!--D3 Library-->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <!--Webpage script-->
+  <script src="js/script.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmSEZSXkD1NuGNIu_VaAS4WFNRwLx3Bto">
+    </script>
+    
+<!--<script src="https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCmSEZSXkD1NuGNIu_VaAS4WFNRwLx3Bto"></script>-->
+
+ </body>
+
+
+</html>
