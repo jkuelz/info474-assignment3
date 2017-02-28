@@ -559,14 +559,14 @@ var layout = {
     },
 };
 
- var projection = Plotly.newPlot("projection", data, layout, {displayModeBar: false, scrollZoom: true});
+ var projection = Plotly.newPlot("map", data, layout, {displayModeBar: false, scrollZoom: true});
 
 })();
 
 var flightInfo = $('#flight-info')
 flightInfo.css('display', 'none');
 
-projection.on('plotly_hover', function(data){
+$("#map").on('plotly_hover', function(data){
     var pn="";
     var tn="";
     data.points.forEach((point, index) => {
