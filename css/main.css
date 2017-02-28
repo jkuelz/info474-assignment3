@@ -61,6 +61,7 @@ body {
 
 #projection {
   display: inline-block;
+  /*max-width: 600px;*/
 }
 
 .form-group select {
