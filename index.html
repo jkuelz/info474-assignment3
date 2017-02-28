@@ -6,14 +6,23 @@
   <meta name="description" content="Assignment 3 for INFO 474 at the University of Washington.">
   <meta name="author" content="Jessica Kuelz">
   <title>Assignment 3</title>
+<!-- load D3 and TopoJSON //-->
+ <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!--<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
+    <!--<script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
+    <script src="//d3js.org/d3.geo.projection.v0.min.js"></script>-->
+    <script src="http://d3js.org/topojson.v2.min.js"></script>
+    <!--<script src="//d3js.org/queue.v1.min.js"></script>-->
+<!-- load CSS and Javascript //-->
   <link rel="stylesheet" href="css/main.css">
-  <script src="bundle.js"></script>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script src="//d3js.org/topojson.v1.min.js"></script>
+  <script src="js/script.js"></script>
+<!-- load CSS and Javascript //-->
   <!--<script src="plotly-latest.min.js"></script>-->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  
+    <!--<script src="bundle.js"></script>-->
 
  </head>
 
@@ -21,182 +30,91 @@
 
   <div class="jumbotron">
       <div class="container">
-          <h1>Interactive Data Visualization</h1>
-          <p>INFO 474 | Assignment 3 | By Jessica Kuelz</p>
+          <h1>Fatal Plane Crash Data</h1>
+          <p>INFO 474 | Assignment 3 Part 1 | By Jessica Kuelz</p>
           <p>Interactive D3 visualization of fatal commercial passenger plane crashes from 1993-2013.</p>
       </div>
   </div>
 
+  <!--<div id="block">
+      <div id="map" width="940" height="480"></div>
+      <p id"log"> Loading map....please wait.</p>
+  </div>-->
+
     <div class="container " id="visualizations">
-        <div class="container">
-            <div class="col-md-10" id="chart"></div>
-            <div class="col-md-2" id="controls">
+        <!--<div class="container row">
+            
+            <div class="col-md-9" id="chart"></div>
+            
+            <div class="col-md-3" id="controls">
                 <form>
                     <input type="radio" name="view" value="phase" checked>Flight Phase<br>
                     <input type="radio" name="view" value="cause">Cause<br>
                 </form>
             </div>
-        
-        <div id="map"></div>
+
+        </div>-->
+        <h2 class="graph-title">When Have the Most Fatalities Occured?</h2>
+        <div id="graph"></div>
+
+        <br>
+
+        <!--<div class="container-fluid">-->
+        <h2 class="graph-title">Plane Crashes by Location and Number of Fatalities</h2>
+        <div id="projection"></div>
+        <!--<div id="vol" class="slider-­‐range"></div>
+        <p>
+        <label for="volamount">Year range:</label>
+        <input type="text" id="volamount" readonly style="border:0; color:#f6931f; font-­‐weight:bold;">
+        </p>-->
+
+         <div id="flight-info">
+                <h3 id="flight-header">Flight <span id="ref-id"></span></h3>
+                <h3><small>FATALITIES</small></h3>
+                    <h4 id="fatalities"></h4><hr>
+                <h3><small>DATE</small></h3>
+                    <h4 id="date"></h4><hr>
+                <h3><small>AIRCRAFT</small></h3>
+                    <h4 id="aircraft"></h4><hr>
+                <h3><small>LOCATION</small></h3>
+                    <h4 class="text-capitalize" id="location"></h4><hr>
+                <h3><small>AIRLINE</small></h3>
+                    <h4 id="airline"></h4><hr>
+                <h3><small>CAUSE</small></h3>
+                    <h4>
+                        <span class="text-capitalize" id="meta"></span> 
+                        <span class="text-lowercase" id="cause"></span>
+                    </h4><hr>
+                <h3><small>CERTAINTY</small></h3>
+                    <h4 class="text-capitalize" id="certainty"></h4><hr>
+                <h3><small id="story-label"></small></h3>
+                    <h4 id="story"></h4>
         </div>
-         <!--<svg class="chart"></svg>-->
-        
-         <!--<script src="script.js"></script>-->
-         <!--<script>
-            var width = 750;
-            var height = 450;
-            var margin = {top: 20, right: 15, bottom: 30, left: 40};
-                var w = width - margin.left - margin.right;
-                var h = height - margin.top - margin.bottom;
 
-            var dataset; //the full dataset
-            var patt = new RegExp("all");
+        <div class="form-group">
+            <label for="phase-filter"> Filter by Flight Phase: </label>
+            <select id="phase-filter" class="form-control">
+                <option value="all">All</option>
+                <option value="grounded">Grounded</option>
+                <option value="takeoff">Takeoff</option>
+                <option value="initial_climb">Initial Climb</option>
+                <option value="en_route">En Route</option>
+                <option value="approach">Approach</option>
+                <option value="landing">Landing</option>
+                <option value="unknown">Unknown</option>
+            </select>
+        </div>
+        <h4>Displaying <span id="count"></span> incidents out of <span id="totalCount"></span> total crashes. <span id="percentage"></span> of flights in dataset.</h4>
+        <div class="plot" id="plotdiv"></div>
 
+  </div>
 
-            d3.csv("data/Flight_Risk_Data.csv", function(error, flights) {
-            //read in the data
-            if (error) return console.warn(error);
-                flights.forEach(function(d) {
-                    d.date = +d.date;
-                    d.plane_type = +d.plane_type;
-                    d.country = +d.country;
-                    d.fat = +d.fat;
-                    d.phase = +d.phase;
-                    d.cause = +d.cause;
-            });
-            //dataset is the full dataset -- maintain a copy of this at all times
-            dataset = flights;
-
-
-            //all the data is now loaded, so draw the initial vis
-            drawVis(dataset);
-            });
-
-            var col = d3.scale.ordinal(d3.schemeCategory10);
-
-
-            var svg = d3.select("body").append("svg")
-                .attr("width", w + margin.left + margin.right)
-                .attr("height", h + margin.top + margin.bottom)
-            .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            var chart = d3.select(".chart")
-                .attr("width", w + margin.left + margin.right)
-                .attr("height", h + margin.top + margin.bottom+15)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            var tooltip = d3.select("body").append("div")
-                .attr("class", "tooltip")
-                .style("opacity", 0);
-
-            var x = d3.scale.linear()
-                    .domain([0, 1000])
-                    .range([0, w]);
-
-            var y = d3.scale.linear()
-                    .domain([0, 1000])
-                    .range([h, 0]);
-
-            // var xAxis = d3.axis.bottom()
-            //     .ticks(4)
-            //     .scale(x);
-
-            chart.append("g")
-                .attr("class", "axis")
-                .attr("transform", "translate(0," + h + ")")
-                .call(xAxis)
-                .append("text")
-                .attr("x", w)
-                .attr("y", -6)
-                .style("text-anchor", "end")
-                .text("Price");
-
-            var yAxis = d3.axis.left()
-                .scale(y);
-
-            chart.append("g")
-            .attr("class", "axis")
-            .call(yAxis)
-                .append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 6)
-                .attr("dy", ".71em")
-                .style("text-anchor", "end")
-                .text("True Value");
-
-            function drawVis(dataset) { //draw the circiles initially and on each interaction with a control
-
-            var circle = chart.selectAll("circle")
-            .data(dataset);
-
-            circle
-                .attr("cx", function(d) { return x(d.price);  })
-                .attr("cy", function(d) { return y(d.tValue);  })
-                .style("fill", function(d) { return col(d.plane_type); });
-
-            circle.exit().remove();
-
-            circle.enter().append("circle")
-                .attr("cx", function(d) { return x(d.price);  })
-                .attr("cy", function(d) { return y(d.tValue);  })
-                .attr("r", 4)
-                .style("stroke", "black");
-
-            };
-
-         </script>-->
-    </div>
-
-  <script>
-    // document.getElementById("type").onChange =
-    //     function() { filterType(this.value); }
-
-
-
-//   map stuff
-    // var width = 960,
-    //     height = 500;
-
-    // var color = d3.scale.ordinal()
-    //     .domain([0, 10, 25, 50, 90])
-    //     .range(["#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#3182bd", "#08519c"]);
-    //     // .range(['#1b9e77','#d95f02','#7570b3','#e7298a','#66a61e']);
-
-    // var path = d3.geo.path();
-
-    // var svg = d3.select("body").append("svg")
-    //     .attr("width", width)
-    //     .attr("height", height);
-
-    // queue()
-    // .defer(d3.json, "us.json")
-    // .defer(d3.csv, "/data/Flight_Risk_Data.csv")
-    // .await(ready);
-
-    // function ready(error, us, flights) {
-    // if (error) throw error;
-
-    // var valueById = {};
-
-    // flights.forEach(function(d) { valueById[d.id] = d.People_of_all_ages_in_poverty_percent_2007; console.log(valueById[d.id] = d.People_of_all_ages_in_poverty_percent_2007); });
-
-    // svg.append("g")
-    //     .attr("class", "countries")
-    //     .selectAll("path")
-    //     .data(topojson.feature(us, us.objects.countries).features)
-    //     .enter().append("path")
-    //     .attr("d", path)
-    //     .style("fill", function(d) { return color(valueById[d.id]); });
-
-    // svg.append("path")
-    //     .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a.id !== b.id; }))
-    //     .attr("class", "states")
-    //     .attr("d", path);
-    // }
-
-   </script>
+        <div class="footer container-fluid">
+            <div class="container">
+            <p>Made with the help of <a href="https://plot.ly/javascript/">Plotly.js</a></p>
+            </div>
+        </div>
+  
 
   <!--JQuery Library-->
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"
