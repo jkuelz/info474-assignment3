@@ -241,7 +241,7 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
             lat: currentData.map(f => f.lat),
             text: currentData.map(f => f.loc),
             marker: {
-                size: markerScale,
+                size: currentData.map(f => f.fat),
                 color: "#F74356",
                 opacity: 0.6,
                 cmin: d3.min(currentData.map(d=> d.fat)),
