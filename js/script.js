@@ -374,7 +374,7 @@ function prepData(rawData) {
 var latitudes = dataset.map(f => { if (f.lat) { return f.lat } else { return 0 } })
 var longitudes = dataset.map(f => { if (f.lng) { return f.lng } else { return 0 } })
 
-Plotly.d3.csv("/data/updated_flight_data.csv", function(err, flights) {
+Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
     if (err) return console.warn(err);
         function unpack(flights, key) {
             return flights.map(function(flight) { return flight[key]; })
@@ -484,6 +484,38 @@ Plotly.d3.csv("/data/updated_flight_data.csv", function(err, flights) {
 
 
     Plotly.newPlot('plotdiv', data, layout, {displayModeBar: false, scrollZoom: true});
+
+    var flightInfo = $('#flight-info')
+    flightInfo.css('display', 'none');
+
+    $('plotdiv').on('plotly_hover', function(data){
+            console.log(data)
+        var pn="";
+        var tn="";
+        data.points.forEach((point, index) => {
+            pn = point.pointNumber;
+            var flight = dataset[pn];
+            //tn = point.curveNumber;
+            $('#ref-id').html(dataset[pn].ref);
+            $('#fatalities').html(dataset[pn].fat);
+        $('#date').html((flight.date.getMonth() + 1) + "-" + (flight.date.getDate() + 1) + "-" + flight.date.getFullYear());
+            $('#aircraft').html(dataset[pn].plane_type);
+            $('#location').html(dataset[pn].country);
+            $('#airline').html(dataset[pn].airline);
+            if (dataset[pn].meta.toLowerCase() != "unknown") {
+                $('#meta').html((dataset[pn].meta.split('_').join(' ')) + " - ");
+                $('#cause').html(dataset[pn].cause);
+            } else {
+                $('#meta').html("Unknown");
+            }
+            $('#certainty').html(dataset[pn].cert);
+            if (dataset[pn].notes) {
+                $('#story-label').html("STORY");
+                $('#story').html( dataset[pn].notes ? dataset[pn].notes : "");
+            }
+        })
+        flightInfo.css('display', 'inline-block');
+    });
 };
 
 var phaseSelector = $('#phase-filter')[0];
@@ -494,79 +526,82 @@ function updatePhase(){
 
 phaseSelector.addEventListener('change', (e) => { updatePhase(phaseSelector.value); });
 
+
+
 });
 
 
-var trace1 = {
-    type: 'scattergeo',
-    mode: 'markers',
-    lat: latitudes,
-    lon: longitudes,
-    //hoverinfo: 'text',
-    text: places,
-    marker: {
-        size: markerScale,
-        color: "#F74356",
-        opacity: 0.6,
-        cmin: d3.min(dataset.map(d=> d.fat)),
-        cmax: d3.max(dataset.map(d => d.fat)),
-        //autocolorscale: true,
-        //colorscale: 'Greens',
-        line: {
-            color: 'black',
-            width: 1
-        },
-        sizeref: 10,
-        sizemin: 2
-    },
-    name: 'flight fatalities'
-};
+// var trace1 = {
+//     type: 'scattergeo',
+//     mode: 'markers',
+//     lat: latitudes,
+//     lon: longitudes,
+//     //hoverinfo: 'text',
+//     text: places,
+//     marker: {
+//         size: markerScale,
+//         color: "#F74356",
+//         opacity: 0.6,
+//         cmin: d3.min(dataset.map(d=> d.fat)),
+//         cmax: d3.max(dataset.map(d => d.fat)),
+//         //autocolorscale: true,
+//         //colorscale: 'Greens',
+//         line: {
+//             color: 'black',
+//             width: 1
+//         },
+//         sizeref: 10,
+//         sizemin: 2
+//     },
+//     name: 'flight fatalities'
+// };
 
-var data = [trace1];
+// var data = [trace1];
 
-var layout = {
-    title: 'Hover over a circle to view more information,<br>scroll to zoom in/out.',
-    'geo': {
-        'scope': 'world',
-        'resolution': 100,
-        projection: {
-            type: "eckert 3"
-        },
-        showland: true,
-        landcolor: '#E6E8F4',
-        // showwater: true,
-        // watercolor: '#E6E8F4',
-        showsubunits: true,
-        showcountries: true,
-        subunitwidth: 1,
-        countrywidth: .5,
-        subunitcolor: 'rgb(255,255,255)',
-        countrycolor: '#323545'
-    },
-    font: {
-        family: "Arial",
-        size: 14
-    },
-    autosize: false,
-    // width: 900,
-    // height: 600,
-    margin: {
-        l: 10,
-        r: 10
-        // b: 0,
-        // t: 50,
-        // pad: 1
-    },
-};
+// var layout = {
+//     title: 'Hover over a circle to view more information,<br>scroll to zoom in/out.',
+//     'geo': {
+//         'scope': 'world',
+//         'resolution': 100,
+//         projection: {
+//             type: "eckert 3"
+//         },
+//         showland: true,
+//         landcolor: '#E6E8F4',
+//         // showwater: true,
+//         // watercolor: '#E6E8F4',
+//         showsubunits: true,
+//         showcountries: true,
+//         subunitwidth: 1,
+//         countrywidth: .5,
+//         subunitcolor: 'rgb(255,255,255)',
+//         countrycolor: '#323545'
+//     },
+//     font: {
+//         family: "Arial",
+//         size: 14
+//     },
+//     autosize: false,
+//     // width: 900,
+//     // height: 600,
+//     margin: {
+//         l: 10,
+//         r: 10
+//         // b: 0,
+//         // t: 50,
+//         // pad: 1
+//     },
+// };
 
- var projection = Plotly.newPlot("map", data, layout, {displayModeBar: false, scrollZoom: true});
+//  var projection = Plotly.newPlot("projection", data, layout, {displayModeBar: false, scrollZoom: true});
 
 })();
 
 var flightInfo = $('#flight-info')
 flightInfo.css('display', 'none');
 
-$("#map").on('plotly_hover', function(data){
+$('#plotdiv').on('plotly_hover', function(data){
+    console.log("hovering")
     var pn="";
     var tn="";
     data.points.forEach((point, index) => {
