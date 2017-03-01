@@ -37,167 +37,6 @@ d3.csv("data/updated_flight_data.csv", function(error, flights) {
   //drawVis(dataset);
 // });
 
-// var col = d3.scale.ordinal(d3.schemeCategory10);
-
-//     var chart = d3.select("#chart")
-//         .attr("width", width + margin.left + margin.right)
-//         .attr("height", height + margin.top + margin.bottom)
-//     .append("g")
-//         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-// //     var tooltip = d3.select("body").append("div")
-// //         .attr("class", "tooltip")
-// //         .style("opacity", 0);
-
-//     var x = d3.scaleLinear()
-//             .domain([0, 1000])
-//             .range([0, width]);
-
-//     var y = d3.scaleLinear()
-//             .domain([0, 1000])
-//             .range([height, 0]);
-
-//     var xAxis = d3.axisBottom()
-//         .ticks(6)
-//         .scale(x);
-
-//     chart.append("g")
-//         .attr("class", "axis")
-//         .attr("transform", "translate(0," + height + ")")
-//         .call(xAxis)
-//         .append("text")
-//         .attr("x", w)
-//         .attr("y", -6)
-//         .style("text-anchor", "end")
-//         .text("Phase/Cause");
-
-//     var yAxis = d3.axisLeft()
-//         .scale(y);
-
-//     chart.append("g")
-//     .attr("class", "axis")
-//     .call(yAxis)
-//         .append("text")
-//         .attr("transform", "rotate(-90)")
-//         .attr("y", 6)
-//         .attr("dy", ".71em")
-//         .style("text-anchor", "end")
-//         .text("Number of Fatalities");
-
-//     function drawVis(dataset) { //draw the circles initially and on each interaction with a control
-
-//     var rect = chart.selectAll("rect")
-//     .data(dataset);
-
-//     rect
-//         .attr("cx", function(d) { return x(d.phase);  })
-//         .attr("cy", function(d) { return y(d.fat);  })
-//         //.style("fill", function(d) { return col(d.plane_type); });
-
-//     rect.exit().remove();
-
-//     rect.enter().append("rect")
-//         .attr("x", function(d) { return x(d.phase);  })
-//         .attr("y", function(d) { return y(d.fat);  })
-//         .attr("height", 0)
-//         .style("stroke", "black");
-
-//     }
-// // var makeProjection = () => {
-//     var width = 960,
-//     height = 500;
-
-//     var projection = d3.geoMercator() 
-//         .scale(175)
-//         .translate([width / 2, height / 2])
-//         .precision(.1);
-
-//     var path = d3.geoPath()
-//         .projection(projection);
-
-//     var graticule = d3.geoGraticule();
-
-//     var svg = d3.select("body").append("svg")
-//         .attr("width", width)
-//         .attr("height", height);
-
-//     svg.append("defs").append("path")
-//         .datum({type: "Sphere"})
-//         .attr("id", "sphere")
-//         .attr("d", path);
-
-//     svg.append("use")
-//         .attr("class", "stroke")
-//         .attr("xlink:href", "#sphere");
-
-//     svg.append("use")
-//         .attr("class", "fill")
-//         .attr("xlink:href", "#sphere");
-
-//     svg.append("path")
-//         .datum(graticule)
-//         .attr("class", "graticule")
-//         .attr("d", path);
-
-//     d3.json("/mbostock/raw/4090846/world-50m.json", function(error, world) {
-//         if (error) throw error;
-
-//         svg.insert("path", ".graticule")
-//             .datum(topojson.feature(world, world.objects.land))
-//             .attr("class", "land")
-//             .attr("d", path);
-
-//         svg.insert("path", ".graticule")
-//             .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
-//             .attr("class", "boundary")
-//             .attr("d", path);
-//         });
-
-//     d3.select(self.frameElement).style("height", height + "px");
-// // }
-
-
-// var color = d3.scaleQuantile()
-//     .domain([0, 100, 200, 300, 400, 500, 600])
-//     .range(["#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#3182bd", "#08519c"]);
-
-// var path = d3.geoPath();
-
-// var svg = d3.select("body").append("svg")
-//     .attr("width", width)
-//     .attr("height", height);
-
-// queue()
-//     .defer(d3.json, "world-50.json")
-//     .defer(d3.csv, "data/updated_flight_data.csv")
-//     .await(ready);
-
-// function ready(error, world, flights) {
-//   if (error) throw error;
-
-//   var fatByPhase = {};
-
-//   flights.forEach(function(f) { fatByPhase[f.phase] = +f.fat; });
-
-//   svg.append("g")
-//       .attr("class", "countries")
-//       .datum(topojson.feature(world, world.objects.countries))
-//     .enter().append("path")
-//       .attr("d", path)
-//       .style("fill", function(d) { return color(fatByPhase[f.phase]); });
-
-// //   svg.append("path")
-// //       .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a.id !== b.id; }))
-// //       .attr("class", "states")
-// //       .attr("d", path);
-
-//     svg.selectAll(".symbol")
-//         .data(flights.sort(function(a, b) { return b.fat }))
-//         .attr("class", "symbol")
-//         .attr("d", path.pointRadius(d => {radius(d.fat)} ))
-
-// }
-
     var filteredPhase = [dataset.filter(f => f.phase ==="grounded"), dataset.filter(f => f.phase ==="takeoff"), dataset.filter(f => f.phase ==="initial_climb"), dataset.filter(f => f.phase ==="en_route"), dataset.filter(f => f.phase ==="approach"), dataset.filter(f => f.phase ==="landing")];
     
     var filteredPhases = phaseVars.map(p => dataset.filter(f => f.phase === p));
@@ -236,40 +75,6 @@ d3.csv("data/updated_flight_data.csv", function(error, flights) {
    // function() { filterType(this.value); }
 
 
-function aggregateFilter(filteredData, filterOn) {
-	//add code to filter to mytype and rerender vis here
-    var totals = [];
- filteredData.forEach(function(element) {
-        result = element.map(f => f[filterOn])
-        var count = 0;
-        for (var i = 0; i <result.length; i++) {
-            count += result[i]; 
-        }
-        totals.push(count);
-    });
-    return totals;
-};
-
-var getData = function(data, category, callback) {
-    callback(data, category);
-}
-
-//console.log(getData(filteredPhases, "phase", aggregateFilter))
-
-function filterPhase(ftype) {
-	//add code to filter to mytype and rerender vis here
-    var filteredAll = new RegExp("all").test(ftype);
-    if (filteredAll) {
-        chart.data[0].x 
-        Plotly.redraw(chart);
-    } else {
-        var filtered = currentData.filter( (f) => d.phase === ftype);
-    }
-   // Plotly.purge(chart);
-    Plotly.redraw(chart);
-}
-
-
 var countries = dataset.map(f => f.country);
 var places = dataset.map(f => f.loc);
 var scale = 5;
@@ -283,21 +88,22 @@ var xField = 'date';
 var yField = 'fat';
 
 var selectorOptions = {
+   // y: 0,
     buttons: [{
-        step: 'month',
+        step: 'year',
         stepmode: 'backward',
-        count: 1,
-        label: '1m'
-    }, {
-        step: 'month',
-        stepmode: 'backward',
-        count: 6,
-        label: '6m'
+        count: 15,
+        label: '15y'
     }, {
         step: 'year',
-        stepmode: 'todate',
-        count: 1,
-        label: 'YTD'
+        stepmode: 'backward',
+        count: 10,
+        label: '10y'
+    }, {
+        step: 'year',
+        stepmode: 'backward',
+        count: 5,
+        label: '5y'
     }, {
         step: 'year',
         stepmode: 'backward',
@@ -312,8 +118,11 @@ Plotly.d3.csv('data/updated_flight_data.csv', function(err, rawData) {
     if(err) throw err;
 
     var data = prepData(rawData);
+    //console.log(d3.max(data.map(year => year.y)));
     var layout = {
         title: 'Time series with range slider and selectors',
+        // height: 700,
+        // width: 700,
         showlegend: false,
         // margin: {
         //      t: 100,
@@ -325,28 +134,40 @@ Plotly.d3.csv('data/updated_flight_data.csv', function(err, rawData) {
         },
         xaxis: {
             title: 'YEAR',
+            type: 'date',
             titlefont: {
                 family: 'Arial',
                 size: 16,
-                color: 'lightgrey'
+                color: 'grey'
             },
             rangeselector: selectorOptions,
-            rangeslider: {}
+            rangeslider: {
+                bgcolor: "#FFFFFF",
+                activecolor: "#BAE1F2",
+                thickness: .25,
+                //range: [0, ]
+                //visible: false
+            }
         },
         yaxis: {
             //fixedrange: true,
-            type: 'log',
-            autorange: true,
+            //type: 'log',
+            //autorange: true,
+            //range: [0, d3.max(data.map(year => year.y))],
+            //autotick: false,
+            ticks: 'outside',
+            tick0: 0,
+            dtick: 200,
+            //ticklen: 400,
             title: 'FATALITIES',
             titlefont: {
                 family: 'Arial',
                 size: 16,
-                color: 'lightgrey'
+                color: 'grey'
             }
         }
     };
-   // Plotly.deleteTraces('graph', 0);
-    Plotly.plot('graph', data, layout, {displayModeBar: false});
+    Plotly.plot('graph', data, layout, {displayModeBar: false, scrollZoom: true});
 });
 
 function prepData(rawData) {
@@ -380,15 +201,9 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
             return flights.map(function(flight) { return flight[key]; })
         }
     var allData = flights;
-    // var allFatalities = unpack(flights, 'fat');
-    // var allDates = unpack(flights, 'date');
-    var allPhases = unpack(flights, 'phase');
     var totalCount = allData.length;
-    //var listofPhases = [];
     var currentData = [];
-    var currentPhase;
-    // var currentFatality = [];
-    // var currentDate = [];
+    //var currentPhase;
 
     //make an array of phase variables
     // for (var i = 0; i < allPhases.length; i++ ){
@@ -398,11 +213,9 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
     // }
 
     function getPhaseData(chosenPhase) {
-        // currentFatalities = [];
-        // currentDate = [];
         currentData = [];
-        for (var i = 0 ; i < allPhases.length ; i++){
-            if ( allPhases[i] === chosenPhase ) {
+        for (var i = 0 ; i < allData.length ; i++){
+            if ( allData[i].phase === chosenPhase ) {
                 currentData.push(allData[i]);
             } else if (chosenPhase === "all" ) {
                 currentData.push(allData[i]);
@@ -449,6 +262,8 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
 
     var layout = {
         title: 'Hover over a circle to view more information,<br>scroll to zoom in/out.',
+        // height: 900,
+        // width: 600,
         'geo': {
             'scope': 'world',
             'resolution': 100,
@@ -457,8 +272,6 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
             },
             showland: true,
             landcolor: '#E6E8F4',
-            // showwater: true,
-            // watercolor: '#E6E8F4',
             showsubunits: true,
             showcountries: true,
             subunitwidth: 1,
@@ -474,8 +287,8 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
         // width: 900,
         // height: 600,
         margin: {
-            l: 10,
-            r: 10
+            l: 5,
+            r: 5
             // b: 0,
             // t: 50,
             // pad: 1
@@ -484,6 +297,16 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
 
 
     Plotly.newPlot('plotdiv', data, layout, {displayModeBar: false, scrollZoom: true});
+
+};
+
+var phaseSelector = $('#phase-filter')[0];
+
+function updatePhase(){
+    setBubblePlot(phaseSelector.value);
+}
+
+phaseSelector.addEventListener('change', (e) => { updatePhase(phaseSelector.value); });
 
     var flightInfo = $('#flight-info')
     flightInfo.css('display', 'none');
@@ -495,6 +318,8 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
         data.points.forEach((point, index) => {
             pn = point.pointNumber;
             var flight = dataset[pn];
+            console.log(flight)
+
             //tn = point.curveNumber;
             $('#ref-id').html(dataset[pn].ref);
             $('#fatalities').html(dataset[pn].fat);
@@ -516,17 +341,6 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
         })
         flightInfo.css('display', 'inline-block');
     });
-};
-
-var phaseSelector = $('#phase-filter')[0];
-
-function updatePhase(){
-    setBubblePlot(phaseSelector.value);
-}
-
-phaseSelector.addEventListener('change', (e) => { updatePhase(phaseSelector.value); });
-
-
 
 });
 
@@ -607,6 +421,7 @@ $('#plotdiv').on('plotly_hover', function(data){
     data.points.forEach((point, index) => {
         pn = point.pointNumber;
         var flight = dataset[pn];
+        console.log(flight,pn)
         //tn = point.curveNumber;
         $('#ref-id').html(dataset[pn].ref);
         $('#fatalities').html(dataset[pn].fat);

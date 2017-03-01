@@ -96,6 +96,15 @@ body {
   margin-top: 5px;
 }
 
+#phase-filter {
+  width: 200px;
+  display: inline;
+}
+
+#summary {
+  display: inline;
+}
+
 .footer {
   background-color: #323545;
   color:#E6E8F4;
