@@ -120,24 +120,24 @@ Plotly.d3.csv('data/updated_flight_data.csv', function(err, rawData) {
     var data = prepData(rawData);
     //console.log(d3.max(data.map(year => year.y)));
     var layout = {
-        title: 'Time series with range slider and selectors',
+        title: 'Scroll to zoom, use the slider to select a range,<br>or use the buttons to step backward. <br>',
         // height: 700,
         // width: 700,
         showlegend: false,
         // margin: {
         //      t: 100,
-        //     // pad: 2
+        //     pad: 2
         // },
         font: {
-            family: "Arial",
-            size: 14
+            family: "Helvetica",
+            size: 12
         },
         xaxis: {
             title: 'YEAR',
             type: 'date',
             titlefont: {
-                family: 'Arial',
-                size: 16,
+                family: 'Helvetica',
+                size: 14,
                 color: 'grey'
             },
             rangeselector: selectorOptions,
@@ -161,8 +161,8 @@ Plotly.d3.csv('data/updated_flight_data.csv', function(err, rawData) {
             //ticklen: 400,
             title: 'FATALITIES',
             titlefont: {
-                family: 'Arial',
-                size: 16,
+                family: 'Helvetica',
+                size: 14,
                 color: 'grey'
             }
         }
@@ -215,22 +215,62 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
     function getPhaseData(chosenPhase) {
         currentData = [];
         for (var i = 0 ; i < allData.length ; i++){
-            if ( allData[i].phase === chosenPhase ) {
+            if ( allData[i].phase === chosenPhase || allData[i].meta === chosenPhase) {
                 currentData.push(allData[i]);
             } else if (chosenPhase === "all" ) {
                 currentData.push(allData[i]);
             }
         }
     };
+    //console.log(currentData)
 
     // Default Country Data
     setBubblePlot('all');
+    console.log(currentData)
+
+    // var flightInfo = $('#flight-info')
+    // flightInfo.css('display', 'none');
+
+    // $('#plotdiv').on('plotly_hover', function(data){
+    //     console.log("hovering")
+    //     console.log(data)
+    //     //console.log(currentData)
+    //     var pn="";
+    //     var tn="";
+    //     data.points.forEach((point, index) => {
+    //         pn = point.pointNumber;
+    //         var flight = dataset[pn];
+    //         console.log(flight,pn)
+    //         //tn = point.curveNumber;
+    //         $('#ref-id').html(dataset[pn].ref);
+    //         $('#fatalities').html(dataset[pn].fat);
+    //     $('#date').html((flight.date.getMonth() + 1) + "-" + (flight.date.getDate() + 1) + "-" + flight.date.getFullYear());
+    //         $('#aircraft').html(dataset[pn].plane_type);
+    //         $('#location').html(dataset[pn].country);
+    //         $('#airline').html(dataset[pn].airline);
+    //         if (dataset[pn].meta.toLowerCase() != "unknown") {
+    //             $('#meta').html((dataset[pn].meta.split('_').join(' ')) + " - ");
+    //             $('#cause').html(dataset[pn].cause);
+    //         } else {
+    //             $('#meta').html("Unknown");
+    //         }
+    //         $('#certainty').html(dataset[pn].cert);
+    //         if (dataset[pn].notes) {
+    //             $('#story-label').html("STORY");
+    //             $('#story').html( dataset[pn].notes ? dataset[pn].notes : "");
+    //         }
+    //     })
+    //     flightInfo.css('display', 'inline-block');
+    // });
     
     function setBubblePlot(chosenPhase) {
         getPhaseData(chosenPhase); 
+    
+        // console.log(currentData)
+        // handleHover();
 
         var count = currentData.length
-        $("#phase").html(chosenPhase.split('_').join(' '))
+        //$("#phase").html(chosenPhase.split('_').join(' '))
         $('#count').html(count);
         $('#totalCount').html(totalCount);
         $('#percentage').html(Math.round(count/totalCount * 100) + '%');
@@ -258,89 +298,98 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
             name: 'flight fatalities'
         };
 
-    var data = [trace1];
+        var data = [trace1];
 
-    var layout = {
-        title: 'Hover over a circle to view more information,<br>scroll to zoom in/out.',
-        // height: 900,
-        // width: 600,
-        'geo': {
-            'scope': 'world',
-            'resolution': 100,
-            projection: {
-                type: "eckert 3"
+        var layout = {
+            title: 'Hover over a circle to view more information,<br>scroll to zoom in/out.',
+            // height: 400,
+            width: 600,
+            'geo': {
+                'scope': 'world',
+                'resolution': 100,
+                projection: {
+                    type: "eckert 3"
+                },
+                showland: true,
+                landcolor: '#E6E8F4',
+                showsubunits: true,
+                showcountries: true,
+                subunitwidth: 1,
+                countrywidth: .5,
+                subunitcolor: 'rgb(255,255,255)',
+                countrycolor: '#323545'
             },
-            showland: true,
-            landcolor: '#E6E8F4',
-            showsubunits: true,
-            showcountries: true,
-            subunitwidth: 1,
-            countrywidth: .5,
-            subunitcolor: 'rgb(255,255,255)',
-            countrycolor: '#323545'
-        },
-        font: {
-            family: "Arial",
-            size: 14
-        },
-        autosize: false,
-        // width: 900,
-        // height: 600,
-        margin: {
-            l: 5,
-            r: 5
-            // b: 0,
-            // t: 50,
-            // pad: 1
-        },
-    };
+            font: {
+                family: "Helvetica",
+                size: 12
+            },
+            autosize: false,
+            // width: 900,
+            // height: 600,
+            margin: {
+                l: 5,
+                r: 5
+                // b: 0,
+                // t: 50,
+                // pad: 1
+            },
+            // pad: {
+            //     l: 0,
+            //     r: 5
+            // }
+        };
+        Plotly.newPlot('plotdiv', data, layout, {displayModeBar: false, scrollZoom: true});
 
+          
+        var flightInfo = $('#flight-info')
+        flightInfo.css('display', 'none');
+        console.log(currentData)
 
-    Plotly.newPlot('plotdiv', data, layout, {displayModeBar: false, scrollZoom: true});
-
-};
-
-var phaseSelector = $('#phase-filter')[0];
-
-function updatePhase(){
-    setBubblePlot(phaseSelector.value);
-}
-
-phaseSelector.addEventListener('change', (e) => { updatePhase(phaseSelector.value); });
-
-    var flightInfo = $('#flight-info')
-    flightInfo.css('display', 'none');
-
-    $('plotdiv').on('plotly_hover', function(data){
+        $('#plotdiv')[0].on('plotly_hover', function(data) {
             console.log(data)
-        var pn="";
-        var tn="";
-        data.points.forEach((point, index) => {
-            pn = point.pointNumber;
-            var flight = dataset[pn];
-            console.log(flight)
+            var pn="";
+            var tn="";
+            data.points.forEach((point, index) => {
+                pn = point.pointNumber;
+                var flight = currentData[pn];
+                console.log(flight)
 
-            //tn = point.curveNumber;
-            $('#ref-id').html(dataset[pn].ref);
-            $('#fatalities').html(dataset[pn].fat);
-        $('#date').html((flight.date.getMonth() + 1) + "-" + (flight.date.getDate() + 1) + "-" + flight.date.getFullYear());
-            $('#aircraft').html(dataset[pn].plane_type);
-            $('#location').html(dataset[pn].country);
-            $('#airline').html(dataset[pn].airline);
-            if (dataset[pn].meta.toLowerCase() != "unknown") {
-                $('#meta').html((dataset[pn].meta.split('_').join(' ')) + " - ");
-                $('#cause').html(dataset[pn].cause);
-            } else {
-                $('#meta').html("Unknown");
-            }
-            $('#certainty').html(dataset[pn].cert);
-            if (dataset[pn].notes) {
-                $('#story-label').html("STORY");
-                $('#story').html( dataset[pn].notes ? dataset[pn].notes : "");
-            }
-        })
-        flightInfo.css('display', 'inline-block');
-    });
+                //tn = point.curveNumber;
+                $('#ref-id').html(flight.ref);
+                $('#fatalities').html(flight.fat);
+            // $('#date').html((flight.date.getMonth() + 1) + "-" + (flight.date.getDate() + 1) + "-" + flight.date.getFullYear());
+                $('#date').html(flight.date);
+                $('#aircraft').html(flight.plane_type);
+                $('#location').html(flight.country);
+                $('#airline').html(flight.airline);
+                if (flight.meta.toLowerCase() != "unknown") {
+                    $('#meta').html((flight.meta.split('_').join(' ')));
+                    $('#cause').html("- " + flight.cause);
+                } else {
+                    $('#meta').html("Unknown");
+                }
+                $('#certainty').html(flight.cert);
+                if (flight.notes) {
+                    $('#story-label').html("STORY");
+                    $('#story').html( flight.notes ? flight.notes : "");
+                }
+            })
+            flightInfo.css('display', 'inline-block');
+        });
+
+         
+        
+    };
+        
+        
+          
+       
+
+    var phaseSelector = $('#phase-filter')[0];
+    // function updatePhase(){
+    //     setBubblePlot(phaseSelector.value);
+    // }
+    phaseSelector.addEventListener('change', (e) => { setBubblePlot(phaseSelector.value); });
 
 });
 
@@ -411,38 +460,9 @@ phaseSelector.addEventListener('change', (e) => { updatePhase(phaseSelector.valu
 
 })();
 
-var flightInfo = $('#flight-info')
-flightInfo.css('display', 'none');
 
-$('#plotdiv').on('plotly_hover', function(data){
-    console.log("hovering")
-    var pn="";
-    var tn="";
-    data.points.forEach((point, index) => {
-        pn = point.pointNumber;
-        var flight = dataset[pn];
-        console.log(flight,pn)
-        //tn = point.curveNumber;
-        $('#ref-id').html(dataset[pn].ref);
-        $('#fatalities').html(dataset[pn].fat);
-    $('#date').html((flight.date.getMonth() + 1) + "-" + (flight.date.getDate() + 1) + "-" + flight.date.getFullYear());
-        $('#aircraft').html(dataset[pn].plane_type);
-        $('#location').html(dataset[pn].country);
-        $('#airline').html(dataset[pn].airline);
-        if (dataset[pn].meta.toLowerCase() != "unknown") {
-            $('#meta').html((dataset[pn].meta.split('_').join(' ')) + " - ");
-            $('#cause').html(dataset[pn].cause);
-        } else {
-            $('#meta').html("Unknown");
-        }
-        $('#certainty').html(dataset[pn].cert);
-        if (dataset[pn].notes) {
-            $('#story-label').html("STORY");
-            $('#story').html( dataset[pn].notes ? dataset[pn].notes : "");
-        }
-    })
-    flightInfo.css('display', 'inline-block');
-});
+
+
 
 //     (function() {
 //     var d3 = Plotly.d3;
@@ -463,12 +483,19 @@ $('#plotdiv').on('plotly_hover', function(data){
 
 // var phaseNames = ["Grounded", "Takeoff", "Initial climb", "En route", "Approach", "Landing", "Unknown"];
 
-// var radioButtons = $("#controls input:radio");
-//     this.action = radioButtons.val(); //current (initial) selection    
-//     radioButtons.change((e) => { this.action = $(e.target).val();  console.log(this.action); }); //update action
+// var radioButtons = $("#controls input:radio")[0];
+//     this.action = radioButtons.value; //current (initial) selection    
+//     // radioButtons.change((e) => { this.action = $(e.target).val();  console.log(this.action); }); //update action
+//      radioButtons.addEventListener('change', (e) => { updateBar(radioButtons.value); console.log(this.action); });
+//     // function updatePhase(){
+//     //     setBubblePlot(phaseSelector.value);
+//     // }
+    
 
-//     radioButtons.change(function() {
-//         this.action = radioButtons.val();
+//     //radioButtons.change(function() {
+//     function updateBar(selected) {
+//         //this.action = radioButtons.val();
+//         this.action = selected;
 //             var data_index;
 //             if (this.action === "phase") {
 //                 data_index = 0;
@@ -482,7 +509,8 @@ $('#plotdiv').on('plotly_hover', function(data){
     
 //         Plotly.restyle("chart", {'visible': !visible}, data_index);
 //         console.log(chartDiv.data[data_index])
-//     })
+//     // })
+//     }
 
 //     var phase = {
 //         x: ["Grounded", "Takeoff", "Initial climb", "En route", "Approach", "Landing"],

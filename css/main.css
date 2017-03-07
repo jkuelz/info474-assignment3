@@ -19,6 +19,8 @@
 
 body {
   background: #fcfcfa;
+  font-family: "Segoe UI",WeblySleek UILight,Helvetica,Arial,sans-serif;
+
 }
 
 .jumbotron {
@@ -71,29 +73,55 @@ body {
 .form-group h4 {
   float: right;
 }
+
+#world-map {
+  display: inline-block;
+}
+
+#plotdiv {
+  float: left;
+}
+
 #flight-info {
   background-color: #CCCCCC;
-  display: inline-block;
-  width: 400px;
-  margin-right: 0px;
+  /*display: inline-block;*/
+  float: right;
+  max-width: 300px;
+  margin: 0 0 50px 10px;
+  /*margin-right: 0px;
   margin-left: 30px;
-  margin-bottom: 50px;
-  padding: 15px;
+  margin-bottom: 50px;*/
+  /*padding: 15px;*/
   vertical-align: top;
 }
 
 #flight-info hr {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  /*margin-top: 10px;*/
+  /*margin-bottom: 5px;*/
+  margin: 0 0 0 0;
+}
+
+#flight-header {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #flight-info h3{
-  margin-top: 5px;
-  margin-bottom: 0px;
+  /*margin-top: 5px;
+  margin-bottom: 0px;*/
+  margin: 0 15px 0 15px;
+}
+
+#flight-info h3 small {
+    font-weight: lighter;
+    font-size: 14px;
 }
 
 #flight-info h4 {
-  margin-top: 5px;
+  /*margin-top: 5px;*/
+  margin: 0 15px 10px 15px;
+  font-size: 14px;
+  font-weight: normal;
 }
 
 #phase-filter {
