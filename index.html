@@ -31,36 +31,17 @@
   <div class="jumbotron">
       <div class="container">
           <h1>Fatal Plane Crash Data</h1>
-          <p>INFO 474 | Assignment 3 Part 1 | By Jessica Kuelz</p>
-          <p>Interactive D3 visualization of fatal commercial passenger plane crashes from 1993-2013.</p>
+          <p>INFO 474 | Assignment 3 | By Jessica Kuelz</p>
+          <p>Interactive D3 visualization of fatal commercial passenger plane crashes from 1993-2015.</p>
       </div>
   </div>
 
-  <!--<div id="block">
-      <div id="map" width="940" height="480"></div>
-      <p id"log"> Loading map....please wait.</p>
-  </div>-->
-
-    <div class="container " id="visualizations">
-        <!--<div class="container row">
-            
-            <div class="col-md-9" id="chart"></div>
-            
-            <div class="col-md-3" id="controls">
-                <form>
-                    <input type="radio" name="view" value="phase" checked>Flight Phase<br>
-                    <input type="radio" name="view" value="cause">Cause<br>
-                </form>
-            </div>
-
-        </div>-->
-
-     
+    <div class="container " id="visualizations">     
          
     <div class="infoside">
 
         <div class="form-group">
-            <label for="phase-filter"> Filter by Category: </label>
+            <label for="phase-filter"> Filter map by Category: </label>
             <select id="phase-filter" class="form-control">
                 <option value="all">All</option>
                 <optgroup id="phases" label="Flight Phase">
@@ -70,7 +51,6 @@
                     <option value="en_route">En Route</option>
                     <option value="approach">Approach</option>
                     <option value="landing">Landing</option>
-                    <!--<option value="unknown">Unknown</option>-->
                 </optgroup>
                 <optgroup id="causes" label="Crash Cause">
                     <option value="human_error">Human Error</option>
