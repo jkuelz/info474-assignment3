@@ -54,22 +54,10 @@
             </div>
 
         </div>-->
-        <h2 class="graph-title">When Have the Most Fatalities Occured?</h2>
-        <div id="graph"></div>
 
-        <br>
-
-        <!--<div class="container-fluid">-->
-        <h2 class="graph-title">Plane Crashes by Location and Number of Fatalities</h2>
-        <div id="map"></div>
-        <div id="projection"></div>
-        <!--<div id="vol" class="slider-­‐range"></div>
-        <p>
-        <label for="volamount">Year range:</label>
-        <input type="text" id="volamount" readonly style="border:0; color:#f6931f; font-­‐weight:bold;">
-        </p>-->
-
+     
          
+    <div class="infoside">
 
         <div class="form-group">
             <label for="phase-filter"> Filter by Category: </label>
@@ -95,32 +83,43 @@
             </select>
         </div>
         
-        <h4 id="summary">Displaying <span id="count"></span> incidents out of <span id="totalCount"></span> total crashes. <span id="percentage"></span> of flights in dataset.</h4>
-        
-    <div id="world-map">
-        <div id="plotdiv"></div>
-        <div id="flight-info">
-                <h3 id="flight-header">Flight <span id="ref-id"></span></h3>
-                <h3><small>FATALITIES</small></h3>
-                    <h4 class="inline" id="fatalities"></h4><hr>
-                <h3 class="inline"><small>DATE</small></h3>
-                    <h4 id="date"></h4><hr>
-                <h3><small>LOCATION</small></h3>
-                    <h4 class="text-capitalize" id="location"></h4><hr>
-                <h3><small class="inline">AIRCRAFT</small></h3>
-                    <h4 id="aircraft"></h4><hr>
-                <h3><small>AIRLINE</small></h3>
-                    <h4 id="airline"></h4><hr>
-                <h3><small>CAUSE</small></h3>
-                    <h4>
-                        <span class="text-capitalize" id="meta"></span> 
-                        <span class="text-lowercase" id="cause"></span>
-                    </h4><hr>
-                <h3><small>CERTAINTY</small></h3>
-                    <h4 class="text-capitalize" id="certainty"></h4><hr>
-                <h3><small id="story-label"></small></h3>
-                    <h4 id="story"></h4>
+        <div id="calculations">
+        <h4 id="summary" style="display: inline-block">Displaying <span id="count"></span> incidents out of <span id="totalCount"></span> total crashes. <span id="percentage"></span> of flights in dataset.</h4>
         </div>
+        
+        <p id= "hover-helper">Hover over any circle on either graph to view that flight's information</p>
+        
+        <div id="flight-info" style="display: none">
+            <h3 id="flight-header">Flight <span id="ref-id"></span></h3>
+            <h3><small>FATALITIES</small></h3>
+                <h4 class="inline" id="fatalities"></h4><hr>
+            <h3 class="inline"><small>DATE</small></h3>
+                <h4 id="date"></h4><hr>
+            <h3><small>LOCATION</small></h3>
+                <h4 class="text-capitalize" id="location"></h4><hr>
+            <h3><small class="inline">AIRCRAFT</small></h3>
+                <h4 id="aircraft"></h4><hr>
+            <h3><small>AIRLINE</small></h3>
+                <h4 id="airline"></h4><hr>
+            <h3><small>PHASE</small></h3>
+                <h4 class="text-capitalize" id="phase"></h4><hr>
+            <h3><small>CAUSE</small></h3>
+                <h4><span class="text-capitalize" id="meta"></span> 
+                    <span class="text-lowercase" id="cause"></span>
+                </h4><hr>
+            <h3><small>CERTAINTY</small></h3>
+                <h4 class="text-capitalize" id="certainty"></h4><hr>
+            <h3><small id="story-label"></small></h3>
+                <h4 id="story"></h4>
+        </div>
+
+    </div>
+
+    <div class="graphside pull-right">
+        <!--<h2 class="graph-title">Plane Crashes by Location</h2>-->
+        <div id="map" ></div>
+        <!--<h2 class="graph-title">When Have the Most Fatalities Occured?</h2>-->
+        <div id="scatter"></div>
     </div>
 
   </div>
