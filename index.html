@@ -6,23 +6,17 @@
   <meta name="description" content="Assignment 3 for INFO 474 at the University of Washington.">
   <meta name="author" content="Jessica Kuelz">
   <title>Assignment 3</title>
-<!-- load D3 and TopoJSON //-->
+<!-- load jQuery and bootstrap //-->
  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <!--<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
-    <!--<script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
-    <script src="//d3js.org/d3.geo.projection.v0.min.js"></script>-->
-    <script src="https://d3js.org/topojson.v2.min.js"></script>
-    <!--<script src="//d3js.org/queue.v1.min.js"></script>-->
+ <script <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- load D3 and Plotly //-->
+ <script src="https://d3js.org/d3.v4.min.js"></script>
+ <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <!-- load CSS and Javascript //-->
   <link rel="stylesheet" href="css/main.css">
   <script src="js/script.js"></script>
-<!-- load CSS and Javascript //-->
-<!--<script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>-->
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <!--<script src="bundle.js"></script>-->
 
  </head>
 
@@ -67,7 +61,7 @@
         <h4 id="summary" style="display: inline-block">Displaying <span id="count"></span> incidents out of <span id="totalCount"></span> total crashes. <span id="percentage"></span> of flights in dataset.</h4>
         </div>
         
-        <p id= "hover-helper">Hover over any circle on either graph to view that flight's information</p>
+        <p id= "hover-helper">Hover over any circle in either display to view that flight's information</p>
         
         <div id="flight-info" style="display: none">
             <h3 id="flight-header">Flight <span id="ref-id"></span></h3>
@@ -96,9 +90,9 @@
     </div>
 
     <div class="graphside pull-right">
-        <!--<h2 class="graph-title">Plane Crashes by Location</h2>-->
+        <h2 class="graph-title">Plane Crashes by Location</h2>
         <div id="map" ></div>
-        <!--<h2 class="graph-title">When Have the Most Fatalities Occured?</h2>-->
+        <h2 class="graph-title">Plane Crashes by Time and Cause</h2>
         <div id="scatter"></div>
     </div>
 
@@ -109,26 +103,7 @@
             <p>Graphs made with the help of <a href="https://plot.ly/javascript/">Plotly.js</a></p>
             </div>
         </div>
-  
-
-  <!--JQuery Library-->
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-  <!--Bootstrap Library-->
-  <script <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <!--D3 Library-->
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <!--Webpage script-->
-  <!--<script src="js/script.js"></script>-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmSEZSXkD1NuGNIu_VaAS4WFNRwLx3Bto">
-    </script>
-    
-<!--<script src="https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCmSEZSXkD1NuGNIu_VaAS4WFNRwLx3Bto"></script>-->
-
+ 
  </body>
 
 

@@ -185,9 +185,14 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
                     $('#meta').html("Unknown");
                 }
                 $('#certainty').html(flight.cert);
+                $('#story-label').html("STORY");
+                $('#story').html( flight.notes);
                 if (flight.notes !== "") {
-                    $('#story-label').html("STORY");
-                    $('#story').html( flight.notes ? flight.notes : "");
+                    $('#story-label').css('display', 'inline-block');
+                    $('#story').css('display', 'inline-block');
+                } else {
+                    $('#story-label').css('display', 'none');
+                    $('#story').css('display', 'none');
                 }
             })
             $('#hover-helper').css('display', 'none');
@@ -276,6 +281,13 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
         console.log( $("#scatter")[0].data)
         var visibility = $("#map")[0].data[traceCount].visible;
         Plotly.restyle("map", {'visible': "legendonly"}, traceCount);
+        console.log(causeVars.indexOf(phaseSelector.value));
+        if (causeVars.indexOf(phaseSelector.value) >= 0) {
+            Plotly.restyle("scatter", {visible: "legendonly"})
+            Plotly.restyle("scatter", {'visible': "true"}, causeVars.indexOf(phaseSelector.value))
+        } else {
+            Plotly.restyle("scatter", {visible: "true"})
+        }
     }
 
 });

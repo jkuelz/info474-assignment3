@@ -1,6 +1,14 @@
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 
+.geo {
+  cursor: zoom-in;
+}
+
+.point {
+  cursor: pointer;
+}
+
 body {
   background: #fcfcfa;
   font-family: "Segoe UI",WeblySleek UILight,Helvetica,Arial,sans-serif;
@@ -9,12 +17,12 @@ body {
 
 .jumbotron {
   background-color: #323545;
-  color: #E6E8F4;
+  color: #E6E8F4;  
 }
 
 #map {
   float: right;
-  margin-bottom: 10px;
+  margin: 5px auto 5px;
 }
 
 .form-group select {
@@ -45,8 +53,7 @@ body {
 }
 
 .graph-title {
-  float: right; 
-  margin-bottom: 15px;
+  margin: 0px auto ;
   font-size: 24px;
 }
 
