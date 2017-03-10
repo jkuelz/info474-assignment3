@@ -16,7 +16,7 @@ d3.csv("data/updated_flight_data.csv", function(error, flights) {
         d.lng = +d.lng;
   });
 
-
+//step buttons on scatterplot
 var selectorOptions = {
     buttons: [{
         step: 'year',
@@ -42,9 +42,6 @@ var selectorOptions = {
         step: 'all',
     }],
 };
-
-// var latitudes = dataset.map(f => { if (f.lat) { return f.lat } else { return 0 } })
-// var longitudes = dataset.map(f => { if (f.lng) { return f.lng } else { return 0 } })
 
 Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
     if (err) return console.warn(err);
@@ -78,7 +75,6 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
     // Updates the map view
     function setBubblePlot(chosenPhase) {
         getPhaseData(chosenPhase); 
-        console.log(currentData);
 
         var allColors = ['#666666','#543005','#8c510a','#dfc27d','#98e0d5','#39a39a','#003c30','#984ea3',"#386cb0",'#4daf4a','#e41a1c','#ff7f00']
         
@@ -165,12 +161,10 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
     // event handler for hover to display the flight info text
     function handleHover(data) {
         var flightInfo = $('#flight-info')
-        console.log(data)
             var pn;
             data.points.forEach((point, index) => {
                 pn = point.pointNumber;
                 var flight = currentData[pn];
-                console.log(flight)
                 $('#ref-id').html(flight.ref);
                 $('#fatalities').html(flight.fat);
                 $('#date').html(flight.date);
@@ -277,11 +271,8 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
     //event handler for when the filter is changed
     function updatePhase(){
         setBubblePlot(phaseSelector.value);
-        console.log( $('#map')[0].data);
-        console.log( $("#scatter")[0].data)
         var visibility = $("#map")[0].data[traceCount].visible;
         Plotly.restyle("map", {'visible': "legendonly"}, traceCount);
-        console.log(causeVars.indexOf(phaseSelector.value));
         if (causeVars.indexOf(phaseSelector.value) >= 0) {
             Plotly.restyle("scatter", {visible: "legendonly"})
             Plotly.restyle("scatter", {'visible': "true"}, causeVars.indexOf(phaseSelector.value))
@@ -291,6 +282,5 @@ Plotly.d3.csv("data/updated_flight_data.csv", function(err, flights) {
     }
 
 });
-
 
 });
